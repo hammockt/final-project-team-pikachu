@@ -17,6 +17,11 @@ public class GlobalApplication extends Application implements Application.Activi
 	private static Context appContext;
 	private static RateLimitInterceptor pokeAPILimiter;
 
+	public static RateLimitInterceptor getPokeAPILimiter()
+	{
+		return pokeAPILimiter;
+	}
+
 	@Override
 	public void onCreate()
 	{
@@ -38,11 +43,6 @@ public class GlobalApplication extends Application implements Application.Activi
 
 		Log.d(GlobalApplication.class.getSimpleName(), "Starting permits: " + permits);
 		pokeAPILimiter = new RateLimitInterceptor(defaultPermits, timePeriod, permits);
-	}
-
-	public static RateLimitInterceptor getPokeAPILimiter()
-	{
-		return pokeAPILimiter;
 	}
 
 	private void savePokeAPILimiter()

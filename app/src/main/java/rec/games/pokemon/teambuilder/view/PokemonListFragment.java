@@ -154,7 +154,7 @@ public class PokemonListFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				if(searchTerm==null)
+				if(searchTerm == null)
 					searchForPokemon();
 				else
 					clearSearch();
@@ -210,38 +210,38 @@ public class PokemonListFragment extends Fragment
 		final EditText userInputText = itemView.findViewById(R.id.pokemon_list_search);
 
 		builder.setPositiveButton(getString(R.string.action_search_submit), new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which)
 			{
-				@Override
-				public void onClick(DialogInterface dialog, int which)
+				String input = userInputText.getText().toString();
+				searchTerm = input;
+				if(!input.isEmpty())
 				{
-					String input = userInputText.getText().toString();
-					searchTerm = input;
-					if(!input.isEmpty())
+					boolean ifSearchSuccess = false;
+					ifSearchSuccess = setupPokemonList();
+
+					if(ifSearchSuccess)
 					{
-						boolean ifSearchSuccess = false;
-						ifSearchSuccess = setupPokemonList();
+						if(listRV.getLayoutManager() != null)
+							mListRVState = listRV.getLayoutManager().onSaveInstanceState(); //save position
 
-						if(ifSearchSuccess)
-						{
-							if(listRV.getLayoutManager() != null)
-								mListRVState = listRV.getLayoutManager().onSaveInstanceState(); //save position
-
-							mListFAB.setImageResource(R.drawable.ic_action_clear); //add to SQL
-							mListFAB.hide();
-							mListFAB.show(); //fix google bug to show image icon
-							if(getActivity() != null)
-								mListFAB.setBackgroundTintList(
-									ContextCompat.getColorStateList(getActivity(), R.color.colorNegativeFAB));
-						}
-						else
-						{
-							mListRVState = null;
-							clearSearch();
-						}
-
+						mListFAB.setImageResource(R.drawable.ic_action_clear); //add to SQL
+						mListFAB.hide();
+						mListFAB.show(); //fix google bug to show image icon
+						if(getActivity() != null)
+							mListFAB.setBackgroundTintList(
+								ContextCompat.getColorStateList(getActivity(), R.color.colorNegativeFAB));
 					}
+					else
+					{
+						mListRVState = null;
+						clearSearch();
+					}
+
 				}
-			});
+			}
+		});
 		builder.setNegativeButton(getString(R.string.action_search_cancel), new DialogInterface.OnClickListener()
 		{
 			@Override
@@ -258,7 +258,7 @@ public class PokemonListFragment extends Fragment
 	{
 		searchTerm = null;
 		setupPokemonList();
-		if(listRV.getLayoutManager() !=null && mListRVState != null)
+		if(listRV.getLayoutManager() != null && mListRVState != null)
 			listRV.getLayoutManager().onRestoreInstanceState(mListRVState); //restore current position
 		mListFAB.setImageResource(R.drawable.ic_action_search); //add to SQL
 		mListFAB.hide();
@@ -281,7 +281,7 @@ public class PokemonListFragment extends Fragment
 			getString(R.string.pref_sort_default));
 		boolean newDisplayLimit = prefs.getBoolean(this.getResources().getString(R.string.pref_limit_key), false);
 
-		if (!mSortOrder.equals(newSortOrder)) //either changes
+		if(!mSortOrder.equals(newSortOrder)) //either changes
 		{
 			mSortOrder = newSortOrder;
 			listRV.scrollToPosition(0);
@@ -312,7 +312,7 @@ public class PokemonListFragment extends Fragment
 				public boolean match(@Nullable Pokemon pokemon)
 				{
 					if(pokemon != null)
-						return ( pokemon.getId() < 10000 ); //if less than 10000
+						return (pokemon.getId() < 10000); //if less than 10000
 					return false;
 				}
 			};
@@ -366,7 +366,7 @@ public class PokemonListFragment extends Fragment
 				updateSuccess = false;
 			}
 		}
-		else if (searchTerm != null)
+		else if(searchTerm != null)
 		{
 			SearchCriteria<Pokemon> searchCriteria = new SearchCriteria<Pokemon>()
 			{

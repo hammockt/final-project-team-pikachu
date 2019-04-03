@@ -4,7 +4,8 @@ import android.arch.persistence.room.Relation;
 
 import java.util.List;
 
-public class SavedTeam {
+public class SavedTeam
+{
 	public int id;
 	public String name;
 

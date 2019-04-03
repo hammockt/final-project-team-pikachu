@@ -2,7 +2,6 @@ package rec.games.pokemon.teambuilder.view;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -32,7 +31,6 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 
 import rec.games.pokemon.teambuilder.R;
@@ -84,6 +82,29 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 
 	private PokeAPIViewModel mPokeViewModel;
 
+	/**
+	 * Constructs a url to the Bulbapedia page for a Pokémon
+	 *
+	 * @param name the pokemon's resource name
+	 */
+	private static Uri getBulbapediaPage(String name)
+	{
+		return Uri.parse(POKE_BULBAPEDIA_URL).buildUpon()
+			.appendEncodedPath(name + POKE_BULBAPEDIA_END).build();
+	}
+
+	/**
+	 * Constructs a url to the veekun page for a Pokémon
+	 *
+	 * @param name the pokemon's resource name
+	 */
+	private static Uri getVeekunUrl(String name)
+	{
+		return Uri.parse(VEEKUN_POKEMON_URL).buildUpon()
+			.appendPath(name)
+			.build();
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -126,7 +147,7 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 				@Override
 				public void onChanged(@Nullable Pokemon pokemon)
 				{
-					if (pokemon != null)
+					if(pokemon != null)
 					{
 						Log.d(TAG, "mPokemon is loaded is " + pokemon.isLoaded());
 						int code = mPokeViewModel.loadPokemon(pokeId);
@@ -177,7 +198,7 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 					@Override
 					public void onChanged(@Nullable Boolean added)
 					{
-						if (added != null)
+						if(added != null)
 						{
 							updateFABStatus(added);
 						}
@@ -196,17 +217,20 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 		}
 	}
 
-	private void setPokemon(@Nullable Pokemon pokemon) {
+	private void setPokemon(@Nullable Pokemon pokemon)
+	{
 		mPokemon = pokemon;
 
 		// set observers on types and moves
-		if (pokemon != null && !pokemon.isDeferred()) {
-			PokemonResource p = (PokemonResource)pokemon;
+		if(pokemon != null && !pokemon.isDeferred())
+		{
+			PokemonResource p = (PokemonResource) pokemon;
 			numTypes = p.getTypes().size();
 
 			// TODO: remove old observers
-			if (p.getTypes().size() >= 1) {
-				 p.getTypes().get(0).observe(this, new Observer<PokemonType>()
+			if(p.getTypes().size() >= 1)
+			{
+				p.getTypes().get(0).observe(this, new Observer<PokemonType>()
 				{
 					@Override
 					public void onChanged(@Nullable PokemonType pokemonType)
@@ -215,7 +239,8 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 					}
 				});
 			}
-			if (p.getTypes().size() >= 2) {
+			if(p.getTypes().size() >= 2)
+			{
 
 				p.getTypes().get(1).observe(this, new Observer<PokemonType>()
 				{
@@ -229,7 +254,7 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 
 			//complete the move chain
 			final LifecycleOwner owner = this;
-			for(LiveData<PokemonMove> pokemonMove: p.getMoves())
+			for(LiveData<PokemonMove> pokemonMove : p.getMoves())
 			{
 				pokemonMove.observe(this, new Observer<PokemonMove>()
 				{
@@ -322,9 +347,11 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 			{
 				showType(1, mType1.getName());
 			}
-			if (numTypes < 2) {
+			if(numTypes < 2)
+			{
 				hideType2();
-			} else
+			}
+			else
 			{
 				if(mType2 == null)
 				{
@@ -347,24 +374,28 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 		});
 	}
 
-	private void hideType2() {
+	private void hideType2()
+	{
 		mPokemonType2IV.setVisibility(View.GONE);
 		mPokemonType2TV.setVisibility(View.GONE);
 		mPokemonTypeSeperator.setVisibility(View.GONE);
 	}
 
-	private void showType(int index, String name) {
+	private void showType(int index, String name)
+	{
 		TextView tv = mPokemonType1TV;
 		ImageView iv = mPokemonType1IV;
-		if (index == 2) {
+		if(index == 2)
+		{
 			tv = mPokemonType2TV;
 			iv = mPokemonType2IV;
 		}
 
 		tv.setText(name);
 		AssetManager assets = this.getAssets();
-		try {
-			if (index == 2)
+		try
+		{
+			if(index == 2)
 			{
 				mPokemonTypeSeperator.setVisibility(View.VISIBLE);
 			}
@@ -373,8 +404,11 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 			InputStream stream = assets.open(String.format(Locale.US, "types/%s.png", name));
 			Drawable drawable = Drawable.createFromStream(stream, name);
 			iv.setImageDrawable(drawable);
-		} catch (IOException exc) {
-			if (index == 2) {
+		}
+		catch(IOException exc)
+		{
+			if(index == 2)
+			{
 				mPokemonTypeSeperator.setVisibility(View.GONE); //else overlaps type1 in text mode
 			}
 			iv.setImageResource(R.drawable.ic_poke_unknown); // TODO: display unknown.png instead
@@ -427,18 +461,6 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 		}
 	}
 
-	/**
-	 * Constructs a url to the Bulbapedia page for a Pokémon
-	 *
-	 * @param name the pokemon's resource name
-	 */
-	private static Uri getBulbapediaPage(String name)
-	{
-		return Uri.parse(POKE_BULBAPEDIA_URL).buildUpon()
-			.appendEncodedPath(name + POKE_BULBAPEDIA_END).build();
-	}
-
-
 	public void shareToBrowser()
 	{
 		if(mPokemon != null) //placeholder data, need to replace
@@ -450,18 +472,6 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 				startActivity(intent);
 			}
 		}
-	}
-
-	/**
-	 * Constructs a url to the veekun page for a Pokémon
-	 *
-	 * @param name the pokemon's resource name
-	 */
-	private static Uri getVeekunUrl(String name)
-	{
-		return Uri.parse(VEEKUN_POKEMON_URL).buildUpon()
-			.appendPath(name)
-			.build();
 	}
 
 	public void openInVeekun()
@@ -477,8 +487,9 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 		}
 	}
 
-	public void updateFABStatus(boolean added) {
-		if (added)
+	public void updateFABStatus(boolean added)
+	{
+		if(added)
 		{
 			Log.d(TAG, "Added");
 			mItemFAB.setImageResource(R.drawable.ic_status_remove); //remove
@@ -486,7 +497,8 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 			mItemFAB.hide();
 			mItemFAB.show(); //fix google bug to show image icon
 			mItemAdded = true;
-		} else
+		}
+		else
 		{
 			Log.d(TAG, "Removed");
 			mItemFAB.setImageResource(R.drawable.ic_action_add); //add to SQL
@@ -507,12 +519,13 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 		}
 		else
 		{
-			Log.d(TAG,  String.format(Locale.US,"Removing %s...", mPokemon.getName()));
+			Log.d(TAG, String.format(Locale.US, "Removing %s...", mPokemon.getName()));
 			TeamUtils.removePokemonFromCurrentTeam(mSavedTeamRepo, mTeamId, mPokemon);
 		}
 	}
 
-	public void onPokemonMoveClicked(int moveID){
+	public void onPokemonMoveClicked(int moveID)
+	{
 		//Log.d(TAG, "Clicked" + moveID);
 	}
 }

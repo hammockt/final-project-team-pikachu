@@ -60,6 +60,11 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
 		viewHolder.bind(mTeamList.get(position));
 	}
 
+	SavedTeam getTeam(int position)
+	{
+		return mTeamList.get(position);
+	}
+
 	public static class ViewHolder extends RecyclerView.ViewHolder
 	{
 		OnTeamClickListener mListener;
@@ -99,9 +104,5 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
 
 			tvCount.setText(Integer.toString(savedTeam.memberIds.size()));
 		}
-	}
-
-	SavedTeam getTeam(int position) {
-		return mTeamList.get(position);
 	}
 }

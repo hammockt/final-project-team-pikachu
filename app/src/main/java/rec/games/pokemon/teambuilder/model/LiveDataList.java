@@ -218,7 +218,7 @@ public class LiveDataList<E> implements Iterable<E>
 	{
 		LiveDataList<E> subList = new LiveDataList<>();
 
-		for(LiveData<E> item: list)
+		for(LiveData<E> item : list)
 			if(searchCriteria.match(item.getValue()))
 				subList.add(item);
 

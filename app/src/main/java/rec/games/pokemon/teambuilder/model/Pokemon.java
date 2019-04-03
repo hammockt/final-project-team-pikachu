@@ -1,7 +1,5 @@
 package rec.games.pokemon.teambuilder.model;
 
-import java.util.ArrayList;
-
 // Pokemon is a data class representing a pokemon
 public abstract class Pokemon
 {

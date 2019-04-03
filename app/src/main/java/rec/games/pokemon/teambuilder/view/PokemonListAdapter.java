@@ -1,20 +1,14 @@
 package rec.games.pokemon.teambuilder.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Comparator;
 
 import rec.games.pokemon.teambuilder.R;
 import rec.games.pokemon.teambuilder.model.CollectionObserver;
@@ -22,7 +16,6 @@ import rec.games.pokemon.teambuilder.model.LiveDataList;
 import rec.games.pokemon.teambuilder.model.PokeAPIUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.PokemonResource;
-import rec.games.pokemon.teambuilder.model.SearchCriteria;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder>
 {

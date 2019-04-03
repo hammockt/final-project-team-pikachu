@@ -122,24 +122,29 @@ public class PokemonTypeAdapter extends RecyclerView.Adapter<PokemonTypeAdapter.
 			mTypeWeakness.setText(String.valueOf(typeWeak));
 			mTypeResistance.setText(String.valueOf(typeStrong));
 
-			if(typeWeak > 2){
+			if(typeWeak > 2)
+			{
 				mTypeWeakness.setBackgroundColor(ContextCompat.getColor(context, R.color.colorHighlightBackground));
 				mTypeWeakness.setTextColor(ContextCompat.getColor(context, R.color.colorHighlightText));
 			}
-			else {
+			else
+			{
 				mTypeWeakness.setBackgroundColor(ContextCompat.getColor(context, R.color.colorNormalBackground));
 				mTypeWeakness.setTextColor(ContextCompat.getColor(context, R.color.colorNormalText));
 			}
 
 			AssetManager assets = context.getAssets();
 
-			try {
+			try
+			{
 				mTypeName.setVisibility(View.GONE);
 				mTypeImage.setVisibility(View.VISIBLE);
 				InputStream stream = assets.open(String.format(Locale.US, "types/%s.png", typeName));
-				Drawable drawable = Drawable.createFromStream(stream, typeName+".png");
+				Drawable drawable = Drawable.createFromStream(stream, typeName + ".png");
 				mTypeImage.setImageDrawable(drawable);
-			} catch (IOException exc) {
+			}
+			catch(IOException exc)
+			{
 				mTypeImage.setImageResource(R.drawable.ic_poke_unknown);
 				mTypeImage.setVisibility(View.GONE);
 				mTypeName.setVisibility(View.VISIBLE);

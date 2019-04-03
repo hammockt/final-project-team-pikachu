@@ -136,14 +136,17 @@ public class TeamListFragment extends Fragment implements OnTeamClickListener
 		});
 
 		int swipeDirs = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-		ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, swipeDirs) {
+		ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, swipeDirs)
+		{
 			@Override
-			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+			public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1)
+			{
 				return false;
 			}
 
 			@Override
-			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction)
+			{
 				showDeleteTeamDialog(mTeamListAdapter.getTeam(viewHolder.getAdapterPosition()), viewHolder.getAdapterPosition());
 			}
 		});
@@ -193,9 +196,12 @@ public class TeamListFragment extends Fragment implements OnTeamClickListener
 		LayoutInflater inflater = LayoutInflater.from(getContext());
 		View itemView = inflater.inflate(R.layout.team_list_delete_dialog, null);
 		TextView textView = itemView.findViewById(R.id.tv_delete_team);
-		if (!TextUtils.isEmpty(savedTeam.name)) {
+		if(!TextUtils.isEmpty(savedTeam.name))
+		{
 			textView.setText(getString(R.string.delete_team_name_text, savedTeam.name));
-		} else {
+		}
+		else
+		{
 			textView.setText(getString(R.string.delete_team_id_text, savedTeam.id));
 		}
 		builder.setView(itemView);

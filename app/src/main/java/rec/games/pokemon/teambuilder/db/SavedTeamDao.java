@@ -47,12 +47,13 @@ public abstract class SavedTeamDao
 	public abstract void removeAllPokemonFromTeam(int teamId);
 
 	@Transaction
-	public void createSavedTeam(SavedTeam savedTeam) {
+	public void createSavedTeam(SavedTeam savedTeam)
+	{
 		SavedTeamEntity savedTeamEntity = new SavedTeamEntity();
 		savedTeamEntity.id = savedTeam.id;
 		savedTeamEntity.name = savedTeam.name;
 		long teamId = insertSavedTeamEntity(savedTeamEntity);
-		if (savedTeam.memberIds != null)
+		if(savedTeam.memberIds != null)
 		{
 			for(int pokemonId : savedTeam.memberIds)
 			{
@@ -65,8 +66,10 @@ public abstract class SavedTeamDao
 		}
 	}
 
-	public void deleteSavedTeam(SavedTeam savedTeam) {
-		if (savedTeam.id == 0) {
+	public void deleteSavedTeam(SavedTeam savedTeam)
+	{
+		if(savedTeam.id == 0)
+		{
 			return;
 		}
 		SavedTeamEntity savedTeamEntity = new SavedTeamEntity();

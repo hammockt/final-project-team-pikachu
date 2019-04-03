@@ -10,16 +10,15 @@ import android.content.Context;
 @Database(entities = {SavedTeamEntity.class, SavedTeamMemberEntity.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase
 {
-	public abstract SavedTeamDao savedTeamDao();
-
-	static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+	static final Migration MIGRATION_1_2 = new Migration(1, 2)
+	{
 		@Override
-		public void migrate(SupportSQLiteDatabase database) {
+		public void migrate(SupportSQLiteDatabase database)
+		{
 			database.execSQL("ALTER TABLE teams ADD COLUMN name TEXT");
 			database.execSQL("CREATE TABLE team_member_moves (member_id INTEGER, move_id INTEGER, PRIMARY KEY(member_id, move_id))");
 		}
 	};
-
 	private static AppDatabase INSTANCE;
 
 	public static AppDatabase getDatabase(final Context context)
@@ -35,4 +34,6 @@ public abstract class AppDatabase extends RoomDatabase
 			return INSTANCE;
 		}
 	}
+
+	public abstract SavedTeamDao savedTeamDao();
 }

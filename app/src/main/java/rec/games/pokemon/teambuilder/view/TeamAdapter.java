@@ -14,17 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.model.NetworkPriority;
 import rec.games.pokemon.teambuilder.model.PokeAPIUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.PokemonResource;
 import rec.games.pokemon.teambuilder.model.Team;
 import rec.games.pokemon.teambuilder.model.TeamMember;
-import rec.games.pokemon.teambuilder.model.repository.PokeAPIRepository;
-import rec.games.pokemon.teambuilder.viewmodel.PokeAPIViewModel;
 
 public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder>
 {
@@ -60,7 +55,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 	{
 		if(position >= 0 && team != null && team.members != null)
 		{
-			if (team.members.get(position).pokemon.getValue() != null)
+			if(team.members.get(position).pokemon.getValue() != null)
 				return team.members.get(position).pokemon.getValue().getId();
 			else
 				return 0;
@@ -135,7 +130,8 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 			{
 				mSavedTeamMember.pokemon.removeObserver(mObserver);
 			}
-			if (member == null || member.pokemon == null) {
+			if(member == null || member.pokemon == null)
+			{
 				mObserver = null;
 				return;
 			}

@@ -1,7 +1,5 @@
 package rec.games.pokemon.teambuilder.model;
 
-import android.util.Log;
-
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

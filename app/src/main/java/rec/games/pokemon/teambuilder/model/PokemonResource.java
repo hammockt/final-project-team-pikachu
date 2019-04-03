@@ -31,8 +31,15 @@ public class PokemonResource extends Pokemon
 	}
 
 	//could always restructure to access in a different way, just for testing right now
-	public List<LiveData<PokemonMove>> getMoves(){ return moves; }
-	public List<LiveData<PokemonType>> getTypes(){ return types; }
+	public List<LiveData<PokemonMove>> getMoves()
+	{
+		return moves;
+	}
+
+	public List<LiveData<PokemonType>> getTypes()
+	{
+		return types;
+	}
 
 	@Override
 	public String getName()

@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity
 
 		public void refreshFragment()
 		{
-			for(Fragment fragment:mFragmentList)
+			for(Fragment fragment : mFragmentList)
 			{
 				if(fragment != null && fragment.isAdded())
 					getSupportFragmentManager().beginTransaction()

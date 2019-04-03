@@ -33,13 +33,10 @@ import rec.games.pokemon.teambuilder.viewmodel.PokeAPIViewModel;
 
 public class TeamFragment extends Fragment implements TeamAdapter.OnTeamClickListener
 {
-	private static final String TAG = TeamFragment.class.getSimpleName();
-
-	private LiveData<Team> mLiveTeam;
-
 	public static final String TEAM_TYPE_ANALYSIS = "rec.games.pokemon.teambuilder.view.TeamFragment";
 	public static final String TEAM_MOVE_ENABLE = "rec.games.pokemon.teambuilder.view.TeamFragment.Move.Enable";
-
+	private static final String TAG = TeamFragment.class.getSimpleName();
+	private LiveData<Team> mLiveTeam;
 	private TeamAdapter mTeamAdapter;
 	private RecyclerView teamRV;
 	private PokeAPIViewModel mViewModel;
@@ -190,7 +187,7 @@ public class TeamFragment extends Fragment implements TeamAdapter.OnTeamClickLis
 
 	public void onTeamMemberClicked(int pokeId)
 	{
-		if (pokeId > 0)
+		if(pokeId > 0)
 		{
 			Intent intent = new Intent(getContext(), PokemonItemDetailActivity.class);
 			intent.putExtra(PokeAPIUtils.POKE_ITEM, pokeId); //temporary assignment

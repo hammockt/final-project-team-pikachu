@@ -3,7 +3,6 @@ package rec.games.pokemon.teambuilder.db;
 import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
-import android.content.SharedPreferences;
 
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.Team;
@@ -31,7 +30,7 @@ public class TeamUtils
 				public Team apply(SavedTeam savedTeam)
 				{
 					Team team = new Team();
-					if (savedTeam != null && savedTeam.memberIds != null)
+					if(savedTeam != null && savedTeam.memberIds != null)
 					{
 						for(int pokemonId : savedTeam.memberIds)
 						{

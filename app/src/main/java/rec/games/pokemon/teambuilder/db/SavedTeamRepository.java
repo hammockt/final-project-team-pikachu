@@ -32,14 +32,35 @@ public class SavedTeamRepository
 		new DeleteTeamMemberAsyncTask(mDao).execute(tm);
 	}
 
-	public void createSavedTeam(SavedTeam team) { new CreateSavedTeamAsyncTask(mDao).execute(team); }
-	public void deleteSavedTeam(SavedTeam team) { new DeleteSavedTeamAsyncTask(mDao).execute(team); }
+	public void createSavedTeam(SavedTeam team)
+	{
+		new CreateSavedTeamAsyncTask(mDao).execute(team);
+	}
 
-	public LiveData<SavedTeam> getTeamById(int id) { return mDao.getTeamById(id); }
-	public LiveData<List<SavedTeam>> getAllTeams() { return mDao.getAllTeams(); }
+	public void deleteSavedTeam(SavedTeam team)
+	{
+		new DeleteSavedTeamAsyncTask(mDao).execute(team);
+	}
 
-	public LiveData<Boolean> isPokemonInTeam(int teamId, int pokemonId) { return mDao.isPokemonInTeam(teamId, pokemonId); }
-	public boolean isPokemonInTeamSync(int teamId, int pokemonId) { return mDao.isPokemonInTeamSync(teamId, pokemonId); }
+	public LiveData<SavedTeam> getTeamById(int id)
+	{
+		return mDao.getTeamById(id);
+	}
+
+	public LiveData<List<SavedTeam>> getAllTeams()
+	{
+		return mDao.getAllTeams();
+	}
+
+	public LiveData<Boolean> isPokemonInTeam(int teamId, int pokemonId)
+	{
+		return mDao.isPokemonInTeam(teamId, pokemonId);
+	}
+
+	public boolean isPokemonInTeamSync(int teamId, int pokemonId)
+	{
+		return mDao.isPokemonInTeamSync(teamId, pokemonId);
+	}
 
 	private static class CreateSavedTeamAsyncTask extends AsyncTask<SavedTeam, Void, Void>
 	{
