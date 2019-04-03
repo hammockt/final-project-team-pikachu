@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.model.db.AppDatabase;
+import rec.games.pokemon.teambuilder.model.db.SavedTeamDatabase;
 import rec.games.pokemon.teambuilder.model.db.SavedTeamDao;
 import rec.games.pokemon.teambuilder.model.db.TeamUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
@@ -77,7 +77,7 @@ public class TypeAnalysisActivity extends AppCompatActivity implements PokemonTy
 	public void waitForTeamToLoad()
 	{
 		final PokeAPIViewModel viewModel = ViewModelProviders.of(this).get(PokeAPIViewModel.class);
-		final SavedTeamDao savedTeamDao = AppDatabase.getDatabase(this.getApplicationContext()).savedTeamDao();
+		final SavedTeamDao savedTeamDao = SavedTeamDatabase.getDatabase(this.getApplicationContext()).savedTeamDao();
 
 		final MediatorLiveData<Object> mediator = new MediatorLiveData<>();
 

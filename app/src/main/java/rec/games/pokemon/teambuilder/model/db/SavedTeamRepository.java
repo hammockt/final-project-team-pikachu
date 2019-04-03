@@ -12,7 +12,7 @@ public class SavedTeamRepository
 
 	public SavedTeamRepository(Application app)
 	{
-		AppDatabase db = AppDatabase.getDatabase(app);
+		SavedTeamDatabase db = SavedTeamDatabase.getDatabase(app);
 		mDao = db.savedTeamDao();
 	}
 
