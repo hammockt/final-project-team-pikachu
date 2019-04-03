@@ -22,9 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.db.AppDatabase;
-import rec.games.pokemon.teambuilder.db.SavedTeamDao;
-import rec.games.pokemon.teambuilder.db.TeamUtils;
+import rec.games.pokemon.teambuilder.model.db.AppDatabase;
+import rec.games.pokemon.teambuilder.model.db.SavedTeamDao;
+import rec.games.pokemon.teambuilder.model.db.TeamUtils;
 import rec.games.pokemon.teambuilder.model.PokeAPIUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.Team;

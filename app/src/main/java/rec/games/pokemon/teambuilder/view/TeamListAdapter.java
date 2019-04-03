@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.db.SavedTeam;
+import rec.games.pokemon.teambuilder.model.db.SavedTeam;
 
 interface OnTeamClickListener
 {

@@ -34,8 +34,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.db.SavedTeamRepository;
-import rec.games.pokemon.teambuilder.db.TeamUtils;
+import rec.games.pokemon.teambuilder.model.db.SavedTeamRepository;
+import rec.games.pokemon.teambuilder.model.db.TeamUtils;
 import rec.games.pokemon.teambuilder.model.PokeAPIUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.PokemonMove;

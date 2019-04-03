@@ -1,4 +1,4 @@
-package rec.games.pokemon.teambuilder.db;
+package rec.games.pokemon.teambuilder.model.db;
 
 import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;

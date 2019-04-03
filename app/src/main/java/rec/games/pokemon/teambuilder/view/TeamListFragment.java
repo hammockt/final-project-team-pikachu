@@ -26,8 +26,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.db.SavedTeam;
-import rec.games.pokemon.teambuilder.db.SavedTeamRepository;
+import rec.games.pokemon.teambuilder.model.db.SavedTeam;
+import rec.games.pokemon.teambuilder.model.db.SavedTeamRepository;
 import rec.games.pokemon.teambuilder.model.Team;
 
 public class TeamListFragment extends Fragment implements OnTeamClickListener

@@ -1,4 +1,4 @@
-package rec.games.pokemon.teambuilder.db;
+package rec.games.pokemon.teambuilder.model.db;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
