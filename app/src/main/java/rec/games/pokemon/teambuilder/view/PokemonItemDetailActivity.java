@@ -34,8 +34,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.model.db.SavedTeamRepository;
-import rec.games.pokemon.teambuilder.model.db.TeamUtils;
+import rec.games.pokemon.teambuilder.viewmodel.SavedTeamViewModel;
 import rec.games.pokemon.teambuilder.model.PokeAPIUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.PokemonMove;
@@ -71,16 +70,14 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 	private ImageView mPokemonType2IV;
 	private FloatingActionButton mItemFAB;
 	private boolean mItemAdded;
-	private LiveData<Boolean> mLiveItemAdded;
-	private boolean mAllowMovesSelected;
 	private int mTeamId;
 	private ProgressBar mMoveLoaderPB;
 
-	private SavedTeamRepository mSavedTeamRepo;
 	private RecyclerView mMoveRV;
 	private PokemonMoveAdapter mMoveAdapter;
 
 	private PokeAPIViewModel mPokeViewModel;
+	private SavedTeamViewModel mSavedTeamViewModel;
 
 	/**
 	 * Constructs a url to the Bulbapedia page for a Pokémon
@@ -122,7 +119,7 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 		mPokemonType2IV = findViewById(R.id.iv_pokemon_type2);
 		mMoveLoaderPB = findViewById(R.id.pb_loading_move);
 
-		mAllowMovesSelected = false; //default to false
+		boolean allowMovesSelected = false; //default to false
 
 		mItemFAB = findViewById(R.id.item_add_FAB);
 		mItemFAB.hide();
@@ -138,6 +135,7 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 		Intent intent = getIntent();
 
 		mPokeViewModel = ViewModelProviders.of(this).get(PokeAPIViewModel.class);
+		mSavedTeamViewModel = ViewModelProviders.of(this).get(SavedTeamViewModel.class);
 		if(intent != null && intent.hasExtra(PokeAPIUtils.POKE_ITEM))
 		{
 			pokeId = intent.getIntExtra(PokeAPIUtils.POKE_ITEM, 0);
@@ -190,10 +188,8 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 					getResources().getDimensionPixelOffset(R.dimen.rv_fab_padding));
 				mMoveRV.setClipToPadding(false);
 
-				mSavedTeamRepo = new SavedTeamRepository();
-
-				mLiveItemAdded = mSavedTeamRepo.isPokemonInTeam(mTeamId, pokeId);
-				mLiveItemAdded.observe(this, new Observer<Boolean>()
+				LiveData<Boolean> liveItemAdded = mSavedTeamViewModel.isPokemonInTeam(mTeamId, pokeId);
+				liveItemAdded.observe(this, new Observer<Boolean>()
 				{
 					@Override
 					public void onChanged(@Nullable Boolean added)
@@ -208,11 +204,11 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 
 			if(intent.hasExtra(TeamFragment.TEAM_MOVE_ENABLE))
 			{
-				mAllowMovesSelected = false; //true to enable
+				allowMovesSelected = true; //true to enable
 			}
 
 			// Fill in with some fake data
-			mMoveAdapter = new PokemonMoveAdapter(new ArrayList<LiveData<PokemonMove>>(), this, mAllowMovesSelected);
+			mMoveAdapter = new PokemonMoveAdapter(new ArrayList<LiveData<PokemonMove>>(), this, allowMovesSelected);
 			mMoveRV.setAdapter(mMoveAdapter);
 		}
 	}
@@ -511,16 +507,15 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 
 	public void addOrRemovePokemonFromTeam()
 	{
-		//final LiveData<Team> liveTeam = TeamUtils.getCurrentTeam(mPokeViewModel, mSavedTeamDao, prefs);
 		if(!mItemAdded)
 		{
 			Log.d(TAG, String.format(Locale.US, "Adding %s...", mPokemon.getName()));
-			TeamUtils.addPokemonToCurrentTeam(mSavedTeamRepo, mTeamId, mPokemon);
+			mSavedTeamViewModel.addPokemonToCurrentTeam(mTeamId, mPokemon);
 		}
 		else
 		{
 			Log.d(TAG, String.format(Locale.US, "Removing %s...", mPokemon.getName()));
-			TeamUtils.removePokemonFromCurrentTeam(mSavedTeamRepo, mTeamId, mPokemon);
+			mSavedTeamViewModel.removePokemonFromCurrentTeam(mTeamId, mPokemon);
 		}
 	}
 

@@ -21,10 +21,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import rec.games.pokemon.teambuilder.GlobalApplication;
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.model.db.SavedTeamDao;
-import rec.games.pokemon.teambuilder.model.db.TeamUtils;
+import rec.games.pokemon.teambuilder.viewmodel.SavedTeamViewModel;
 import rec.games.pokemon.teambuilder.model.PokeAPIUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.Team;
@@ -40,7 +38,6 @@ public class TeamFragment extends Fragment implements TeamAdapter.OnTeamClickLis
 	private TeamAdapter mTeamAdapter;
 	private RecyclerView teamRV;
 	private PokeAPIViewModel mViewModel;
-	private SavedTeamDao mSavedTeamDao;
 
 	private TextView mLoadingErrorMsgTV;
 	private LinearLayout mLoadingErrorLL;
@@ -91,10 +88,10 @@ public class TeamFragment extends Fragment implements TeamAdapter.OnTeamClickLis
 		mActionTypeAnalysis.setClickable(true);
 
 		mViewModel = ViewModelProviders.of(this).get(PokeAPIViewModel.class);
-		mSavedTeamDao = GlobalApplication.getSavedTeamDatabase().savedTeamDao();
+		SavedTeamViewModel savedTeamViewModel = ViewModelProviders.of(this).get(SavedTeamViewModel.class);
 
 		teamId = getArguments().getInt(Team.TEAM_ID, 0);
-		mLiveTeam = TeamUtils.getCurrentTeam(mViewModel, mSavedTeamDao, teamId);
+		mLiveTeam = savedTeamViewModel.getTeam(teamId);
 
 		mLiveTeam.observe(this, new Observer<Team>()
 		{

@@ -16,10 +16,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import rec.games.pokemon.teambuilder.GlobalApplication;
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.model.db.SavedTeamDao;
-import rec.games.pokemon.teambuilder.model.db.TeamUtils;
+import rec.games.pokemon.teambuilder.viewmodel.SavedTeamViewModel;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.PokemonResource;
 import rec.games.pokemon.teambuilder.model.PokemonType;
@@ -76,7 +74,7 @@ public class TypeAnalysisActivity extends AppCompatActivity implements PokemonTy
 	public void waitForTeamToLoad()
 	{
 		final PokeAPIViewModel viewModel = ViewModelProviders.of(this).get(PokeAPIViewModel.class);
-		final SavedTeamDao savedTeamDao = GlobalApplication.getSavedTeamDatabase().savedTeamDao();
+		SavedTeamViewModel savedTeamViewModel = ViewModelProviders.of(this).get(SavedTeamViewModel.class);
 
 		final MediatorLiveData<Object> mediator = new MediatorLiveData<>();
 
@@ -118,7 +116,7 @@ public class TypeAnalysisActivity extends AppCompatActivity implements PokemonTy
 		});
 
 		totalLoadCount++;
-		final LiveData<Team> savedTeam = TeamUtils.getCurrentTeam(viewModel, savedTeamDao, teamId);
+		final LiveData<Team> savedTeam = savedTeamViewModel.getTeam(teamId);
 		mediator.addSource(savedTeam, new Observer<Team>()
 		{
 			@Override

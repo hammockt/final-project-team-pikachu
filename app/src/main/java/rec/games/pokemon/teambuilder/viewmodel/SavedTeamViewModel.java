@@ -1,29 +1,27 @@
-package rec.games.pokemon.teambuilder.model.db;
+package rec.games.pokemon.teambuilder.viewmodel;
 
 import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
+import android.arch.lifecycle.ViewModel;
 
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.Team;
 import rec.games.pokemon.teambuilder.model.TeamMember;
-import rec.games.pokemon.teambuilder.viewmodel.PokeAPIViewModel;
+import rec.games.pokemon.teambuilder.model.db.SavedTeam;
+import rec.games.pokemon.teambuilder.model.db.SavedTeamRepository;
+import rec.games.pokemon.teambuilder.model.repository.PokeAPIRepository;
 
 /**
- * TeamUtils provides some helper methods for dealing with saved teams.
- * TODO: convert to a ViewModel?
+ * SavedTeamViewModel provides some helper methods for dealing with saved teams
  */
-public class TeamUtils
+public class SavedTeamViewModel extends ViewModel
 {
-	public static boolean isPokemonInCurrentTeam(SavedTeamRepository repo, int teamId, int pokemonId)
-	{
-		return repo.isPokemonInTeamSync(teamId, pokemonId);
-	}
+	private SavedTeamRepository repo = new SavedTeamRepository();
 
-	public static LiveData<Team> getTeam(PokeAPIViewModel viewModel, SavedTeamDao dao, int teamId)
+	public LiveData<Team> getTeam(int teamId)
 	{
-		final PokeAPIViewModel pokeapi = viewModel;
-		LiveData<SavedTeam> liveSavedTeam = dao.getTeamById(teamId);
+		LiveData<SavedTeam> liveSavedTeam = repo.getTeamById(teamId);
 		return Transformations.map(liveSavedTeam, new Function<SavedTeam, Team>()
 			{
 				@Override
@@ -35,7 +33,7 @@ public class TeamUtils
 						for(int pokemonId : savedTeam.memberIds)
 						{
 							TeamMember m = new TeamMember();
-							m.pokemon = pokeapi.getLivePokemon(pokemonId);
+							m.pokemon = PokeAPIRepository.getLivePokemon(pokemonId);
 							team.members.add(m);
 						}
 					}
@@ -45,12 +43,12 @@ public class TeamUtils
 		);
 	}
 
-	public static LiveData<Team> getCurrentTeam(PokeAPIViewModel viewModel, SavedTeamDao dao, int teamId)
+	public LiveData<Boolean> isPokemonInTeam(int teamId, int pokemonId)
 	{
-		return getTeam(viewModel, dao, teamId);
+		return repo.isPokemonInTeam(teamId, pokemonId);
 	}
 
-	public static void addPokemonToCurrentTeam(SavedTeamRepository repo, int teamId, Pokemon pokemon)
+	public void addPokemonToCurrentTeam(int teamId, Pokemon pokemon)
 	{
 		SavedTeam savedTeam = new SavedTeam();
 		savedTeam.id = teamId;
@@ -58,7 +56,7 @@ public class TeamUtils
 		repo.addTeamMember(savedTeam, pokemon.getId());
 	}
 
-	public static void removePokemonFromCurrentTeam(SavedTeamRepository repo, int teamId, Pokemon pokemon)
+	public void removePokemonFromCurrentTeam(int teamId, Pokemon pokemon)
 	{
 		SavedTeam savedTeam = new SavedTeam();
 		savedTeam.id = teamId;
