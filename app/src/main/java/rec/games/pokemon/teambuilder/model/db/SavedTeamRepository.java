@@ -1,6 +1,5 @@
 package rec.games.pokemon.teambuilder.model.db;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
@@ -12,7 +11,7 @@ public class SavedTeamRepository
 {
 	private SavedTeamDao mDao;
 
-	public SavedTeamRepository(Application app)
+	public SavedTeamRepository()
 	{
 		mDao = GlobalApplication.getSavedTeamDatabase().savedTeamDao();
 	}

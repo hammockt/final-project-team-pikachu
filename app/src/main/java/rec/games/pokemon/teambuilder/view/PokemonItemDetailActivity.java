@@ -190,7 +190,7 @@ public class PokemonItemDetailActivity extends AppCompatActivity implements Poke
 					getResources().getDimensionPixelOffset(R.dimen.rv_fab_padding));
 				mMoveRV.setClipToPadding(false);
 
-				mSavedTeamRepo = new SavedTeamRepository(this.getApplication());
+				mSavedTeamRepo = new SavedTeamRepository();
 
 				mLiveItemAdded = mSavedTeamRepo.isPokemonInTeam(mTeamId, pokeId);
 				mLiveItemAdded.observe(this, new Observer<Boolean>()

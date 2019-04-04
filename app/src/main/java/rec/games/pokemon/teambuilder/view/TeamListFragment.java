@@ -74,7 +74,7 @@ public class TeamListFragment extends Fragment implements OnTeamClickListener
 		mAddTeamButton = view.findViewById(R.id.fab_add_team);
 		mAddTeamButton.hide();
 
-		mSavedTeamRepo = new SavedTeamRepository(getActivity().getApplication());
+		mSavedTeamRepo = new SavedTeamRepository();
 		mLiveTeamList = mSavedTeamRepo.getAllTeams();
 
 		mLiveTeamList.observe(this, new Observer<List<SavedTeam>>()
