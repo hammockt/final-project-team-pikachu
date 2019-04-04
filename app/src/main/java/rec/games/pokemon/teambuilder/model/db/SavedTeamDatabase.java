@@ -10,7 +10,7 @@ import android.content.Context;
 @Database(entities = {SavedTeamEntity.class, SavedTeamMemberEntity.class}, version = 2)
 public abstract class SavedTeamDatabase extends RoomDatabase
 {
-	static final Migration MIGRATION_1_2 = new Migration(1, 2)
+	private static final Migration MIGRATION_1_2 = new Migration(1, 2)
 	{
 		@Override
 		public void migrate(SupportSQLiteDatabase database)
@@ -19,20 +19,12 @@ public abstract class SavedTeamDatabase extends RoomDatabase
 			database.execSQL("CREATE TABLE team_member_moves (member_id INTEGER, move_id INTEGER, PRIMARY KEY(member_id, move_id))");
 		}
 	};
-	private static SavedTeamDatabase INSTANCE;
 
-	public static SavedTeamDatabase getDatabase(final Context context)
+	public static SavedTeamDatabase createDatabase(Context context)
 	{
-		synchronized(SavedTeamDatabase.class)
-		{
-			if(INSTANCE == null)
-			{
-				INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SavedTeamDatabase.class, "teams.db")
-					.addMigrations(MIGRATION_1_2)
-					.build();
-			}
-			return INSTANCE;
-		}
+		return Room.databaseBuilder(context.getApplicationContext(), SavedTeamDatabase.class, "teams.db")
+			.addMigrations(MIGRATION_1_2)
+			.build();
 	}
 
 	public abstract SavedTeamDao savedTeamDao();

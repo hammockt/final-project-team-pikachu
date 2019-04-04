@@ -11,15 +11,22 @@ import android.util.Log;
 import java.util.concurrent.TimeUnit;
 
 import rec.games.pokemon.teambuilder.model.RateLimitInterceptor;
+import rec.games.pokemon.teambuilder.model.db.SavedTeamDatabase;
 
 public class GlobalApplication extends Application implements Application.ActivityLifecycleCallbacks
 {
 	private static Context appContext;
 	private static RateLimitInterceptor pokeAPILimiter;
+	private static SavedTeamDatabase savedTeamDatabase;
 
 	public static RateLimitInterceptor getPokeAPILimiter()
 	{
 		return pokeAPILimiter;
+	}
+
+	public static SavedTeamDatabase getSavedTeamDatabase()
+	{
+		return savedTeamDatabase;
 	}
 
 	@Override
@@ -29,6 +36,7 @@ public class GlobalApplication extends Application implements Application.Activi
 		registerActivityLifecycleCallbacks(this);
 
 		appContext = getApplicationContext();
+		savedTeamDatabase = SavedTeamDatabase.createDatabase(appContext);
 
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(appContext);
 		int defaultPermits = Integer.valueOf(getString(R.string.pref_pokeapi_limiter_permits_default));

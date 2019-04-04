@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import rec.games.pokemon.teambuilder.GlobalApplication;
 import rec.games.pokemon.teambuilder.R;
-import rec.games.pokemon.teambuilder.model.db.SavedTeamDatabase;
 import rec.games.pokemon.teambuilder.model.db.SavedTeamDao;
 import rec.games.pokemon.teambuilder.model.db.TeamUtils;
 import rec.games.pokemon.teambuilder.model.Pokemon;
@@ -32,7 +32,6 @@ public class TypeAnalysisActivity extends AppCompatActivity implements PokemonTy
 {
 	private static final String TAG = TypeAnalysisActivity.class.getSimpleName();
 
-	private LiveData<Team> mTeamLiveData;
 	private String actionBarTitle;
 	private TextView mTypePower;
 	private RecyclerView mTypeRV;
@@ -77,7 +76,7 @@ public class TypeAnalysisActivity extends AppCompatActivity implements PokemonTy
 	public void waitForTeamToLoad()
 	{
 		final PokeAPIViewModel viewModel = ViewModelProviders.of(this).get(PokeAPIViewModel.class);
-		final SavedTeamDao savedTeamDao = SavedTeamDatabase.getDatabase(this.getApplicationContext()).savedTeamDao();
+		final SavedTeamDao savedTeamDao = GlobalApplication.getSavedTeamDatabase().savedTeamDao();
 
 		final MediatorLiveData<Object> mediator = new MediatorLiveData<>();
 

@@ -6,14 +6,15 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import rec.games.pokemon.teambuilder.GlobalApplication;
+
 public class SavedTeamRepository
 {
 	private SavedTeamDao mDao;
 
 	public SavedTeamRepository(Application app)
 	{
-		SavedTeamDatabase db = SavedTeamDatabase.getDatabase(app);
-		mDao = db.savedTeamDao();
+		mDao = GlobalApplication.getSavedTeamDatabase().savedTeamDao();
 	}
 
 	public void addTeamMember(SavedTeam team, int pokemonId)
