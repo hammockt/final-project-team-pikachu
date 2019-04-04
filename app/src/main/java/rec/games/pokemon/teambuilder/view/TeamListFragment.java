@@ -1,8 +1,8 @@
 package rec.games.pokemon.teambuilder.view;
 
 import android.app.AlertDialog;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,24 +27,21 @@ import java.util.List;
 
 import rec.games.pokemon.teambuilder.R;
 import rec.games.pokemon.teambuilder.model.db.SavedTeam;
-import rec.games.pokemon.teambuilder.model.db.SavedTeamRepository;
 import rec.games.pokemon.teambuilder.model.Team;
+import rec.games.pokemon.teambuilder.viewmodel.SavedTeamViewModel;
 
 public class TeamListFragment extends Fragment implements OnTeamClickListener
 {
-	private static final String TAG = TeamFragment.class.getSimpleName();
-
-	private LiveData<List<SavedTeam>> mLiveTeamList;
-
 	private TeamListAdapter mTeamListAdapter;
 	private RecyclerView teamRV;
-	private SavedTeamRepository mSavedTeamRepo;
 
 	private TextView mLoadingErrorMsgTV;
 	private LinearLayout mLoadingErrorLL;
 	private Button mLoadingErrorBtn;
 
 	private FloatingActionButton mAddTeamButton;
+
+	private SavedTeamViewModel mSavedTeamViewModel;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState)
@@ -74,10 +71,9 @@ public class TeamListFragment extends Fragment implements OnTeamClickListener
 		mAddTeamButton = view.findViewById(R.id.fab_add_team);
 		mAddTeamButton.hide();
 
-		mSavedTeamRepo = new SavedTeamRepository();
-		mLiveTeamList = mSavedTeamRepo.getAllTeams();
+		mSavedTeamViewModel = ViewModelProviders.of(this).get(SavedTeamViewModel.class);
 
-		mLiveTeamList.observe(this, new Observer<List<SavedTeam>>()
+		mSavedTeamViewModel.getAllTeams().observe(this, new Observer<List<SavedTeam>>()
 		{
 			@Override
 			public void onChanged(@Nullable List<SavedTeam> savedTeamList)
@@ -180,7 +176,7 @@ public class TeamListFragment extends Fragment implements OnTeamClickListener
 			{
 				SavedTeam savedTeam = new SavedTeam();
 				savedTeam.name = userInputText.getText().toString();
-				mSavedTeamRepo.createSavedTeam(savedTeam);
+				mSavedTeamViewModel.createSavedTeam(savedTeam);
 			}
 		});
 
@@ -228,7 +224,7 @@ public class TeamListFragment extends Fragment implements OnTeamClickListener
 			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-				mSavedTeamRepo.deleteSavedTeam(savedTeam);
+				mSavedTeamViewModel.deleteSavedTeam(savedTeam);
 			}
 		});
 

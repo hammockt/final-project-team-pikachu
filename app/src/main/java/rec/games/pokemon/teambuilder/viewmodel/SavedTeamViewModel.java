@@ -5,6 +5,8 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
+import java.util.List;
+
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.Team;
 import rec.games.pokemon.teambuilder.model.TeamMember;
@@ -12,9 +14,6 @@ import rec.games.pokemon.teambuilder.model.db.SavedTeam;
 import rec.games.pokemon.teambuilder.model.db.SavedTeamRepository;
 import rec.games.pokemon.teambuilder.model.repository.PokeAPIRepository;
 
-/**
- * SavedTeamViewModel provides some helper methods for dealing with saved teams
- */
 public class SavedTeamViewModel extends ViewModel
 {
 	private SavedTeamRepository repo = new SavedTeamRepository();
@@ -46,6 +45,21 @@ public class SavedTeamViewModel extends ViewModel
 	public LiveData<Boolean> isPokemonInTeam(int teamId, int pokemonId)
 	{
 		return repo.isPokemonInTeam(teamId, pokemonId);
+	}
+
+	public LiveData<List<SavedTeam>> getAllTeams()
+	{
+		return repo.getAllTeams();
+	}
+
+	public void createSavedTeam(SavedTeam team)
+	{
+		repo.createSavedTeam(team);
+	}
+
+	public void deleteSavedTeam(SavedTeam team)
+	{
+		repo.deleteSavedTeam(team);
 	}
 
 	public void addPokemonToCurrentTeam(int teamId, Pokemon pokemon)
