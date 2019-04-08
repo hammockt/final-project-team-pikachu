@@ -1,4 +1,4 @@
-package rec.games.pokemon.teambuilder.model.db;
+package rec.games.pokemon.teambuilder.model.db.savedteam;
 
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;

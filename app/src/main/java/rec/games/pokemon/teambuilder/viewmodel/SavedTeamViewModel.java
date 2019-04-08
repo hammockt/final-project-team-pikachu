@@ -10,8 +10,8 @@ import java.util.List;
 import rec.games.pokemon.teambuilder.model.Pokemon;
 import rec.games.pokemon.teambuilder.model.Team;
 import rec.games.pokemon.teambuilder.model.TeamMember;
-import rec.games.pokemon.teambuilder.model.db.SavedTeam;
-import rec.games.pokemon.teambuilder.model.db.SavedTeamRepository;
+import rec.games.pokemon.teambuilder.model.db.savedteam.SavedTeam;
+import rec.games.pokemon.teambuilder.model.db.savedteam.SavedTeamRepository;
 import rec.games.pokemon.teambuilder.model.repository.PokeAPIRepository;
 
 public class SavedTeamViewModel extends ViewModel

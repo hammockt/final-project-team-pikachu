@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.concurrent.TimeUnit;
 
 import rec.games.pokemon.teambuilder.model.RateLimitInterceptor;
-import rec.games.pokemon.teambuilder.model.db.SavedTeamDatabase;
+import rec.games.pokemon.teambuilder.model.db.savedteam.SavedTeamDatabase;
 
 public class GlobalApplication extends Application implements Application.ActivityLifecycleCallbacks
 {
