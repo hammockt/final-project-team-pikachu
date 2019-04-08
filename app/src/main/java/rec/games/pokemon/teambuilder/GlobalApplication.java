@@ -8,16 +8,22 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rec.games.pokemon.teambuilder.model.RateLimitInterceptor;
 import rec.games.pokemon.teambuilder.model.db.savedteam.SavedTeamDatabase;
+import rec.games.pokemon.teambuilder.model.db.veekun.VeekunDao;
+import rec.games.pokemon.teambuilder.model.db.veekun.VeekunDatabase;
+import rec.games.pokemon.teambuilder.model.db.veekun.VeekunRepository;
+import rec.games.pokemon.teambuilder.model.db.veekun.VeekunType;
 
 public class GlobalApplication extends Application implements Application.ActivityLifecycleCallbacks
 {
 	private static Context appContext;
 	private static RateLimitInterceptor pokeAPILimiter;
 	private static SavedTeamDatabase savedTeamDatabase;
+	private static VeekunDatabase veekunDatabase;
 
 	public static RateLimitInterceptor getPokeAPILimiter()
 	{
@@ -37,6 +43,14 @@ public class GlobalApplication extends Application implements Application.Activi
 
 		appContext = getApplicationContext();
 		savedTeamDatabase = SavedTeamDatabase.createDatabase(appContext);
+		veekunDatabase = VeekunDatabase.createDatabase(appContext);
+
+		VeekunDao dao = veekunDatabase.veekunDao();
+		VeekunRepository rep = new VeekunRepository(dao);
+		List<VeekunType> tmp = rep.getTypes();
+		//Log.d("hello world", tmp.toString());
+		//for(VeekunType type : tmp)
+		//	Log.d("hello world", "id: " + type.id + ", identifier: " + type.identifier);
 
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(appContext);
 		int defaultPermits = Integer.valueOf(getString(R.string.pref_pokeapi_limiter_permits_default));

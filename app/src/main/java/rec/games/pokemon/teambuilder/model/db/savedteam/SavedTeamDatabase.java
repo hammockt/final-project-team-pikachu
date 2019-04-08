@@ -7,7 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 
-@Database(entities = {SavedTeamEntity.class, SavedTeamMemberEntity.class}, version = 2)
+@Database(entities = {SavedTeamEntity.class, SavedTeamMemberEntity.class}, version = 2, exportSchema = false)
 public abstract class SavedTeamDatabase extends RoomDatabase
 {
 	private static final Migration MIGRATION_1_2 = new Migration(1, 2)
